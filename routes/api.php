@@ -39,6 +39,9 @@ Route::post('/password/reset', [AuthController::class, 'resetPassword']);
 // });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('profile', [AuthController::class, 'profile']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    
     Route::post('/wallet/create', [WalletController::class, 'createWallet']);
     Route::get('/wallet/balance', [WalletController::class, 'balance']);
     Route::post('/wallet/credit', [WalletController::class, 'credit']);

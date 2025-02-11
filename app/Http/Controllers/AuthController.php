@@ -168,5 +168,29 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Password reset successfully.'], 200);
     }
+
+    public function profile(Request $request)
+    {
+        
+        return response()->json(Auth::user());
+    }   
+
+    public function logout(Request $request)
+    {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Get the authenticated user
+            $user = Auth::user();
+
+            // Revoke all of the user's tokens
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->json(['message' => 'Successfully logged out']);
+        } else {
+            return response()->json(['message' => 'User not authenticated'], 401);
+        }
+    }
 }
 
